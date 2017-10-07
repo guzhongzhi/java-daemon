@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NewsMapper" >
+
+    <resultMap id="resultMap" type="com.example.demo.entity.News">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+    </resultMap>
+
+    <select id="load" resultMap="resultMap" resultType="com.example.demo.entity.News">
+        SELECT *
+        FROM news
+        WHERE id = #{id}
+    </select>
+
+    <select id="all" resultMap="resultMap" resultType="java.util.List">
+        SELECT *
+        FROM news
+    </select>
+
+    <select id="getItemsByParentId" resultMap="resultMap" resultType="java.util.List">
+        SELECT *
+        FROM news
+        WHERE parent_id = #{id}
+    </select>
+
+    <select id="delete">
+        DELETE FROM news WHERE id = #{id}
+    </select>
+
+    <select id="insert" parameterType="com.example.demo.entity.News">
+        INSERT INTO news (title,parent_id,created_at,updated_at) VALUES (#{title}, #{parentId}, NOW(), NOW())
+    </select>
+
+    <select id="update" parameterType="com.example.demo.entity.News">
+        UPDATE news SET title = #{title}, updated_at = NOW(), parent_id = #{parentId} WHERE id = #{id}
+    </select>
+
+    <select id="getPageList" resultMap="resultMap" parameterType="com.example.demo.util.PageHelper" resultType="java.util.List">
+        SELECT * FROM news WHERE 1 = 1 ${where} ${orderBy} LIMIT ${limit}
+    </select>
+
+    <select id="getItemCount" parameterType="com.example.demo.util.PageHelper" resultType="java.lang.Integer">
+        SELECT COUNT(*) AS total FROM news WHERE 1 = 1 ${where}
+    </select>
+
+</mapper>
