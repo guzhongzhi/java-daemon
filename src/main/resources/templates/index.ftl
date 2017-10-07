@@ -1,14 +1,21 @@
+<#assign base=request.contextPath />
 <@override name="head_title">
 fdsafdsa - <@super/>
 </@override>
 
 <@override name="body">
-
-    <#list listItems as category>
-        <a href="#">${category.title}</a><br/>
+    <#list navigation as category>
+    <div>
+        <div>
+            ${category.title}
+        </div>
+        <div>
+            <#list category.topNews as news>
+            ${news.title}<br/>
+            </#list>
+        </div>
+    </div>
     </#list>
-
-    ${itemCount}
 </@override>
 
 

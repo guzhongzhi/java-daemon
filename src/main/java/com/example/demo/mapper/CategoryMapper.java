@@ -1,14 +1,12 @@
-package com.example.demo.mapper.entity;
+package com.example.demo.mapper;
 
 import com.example.demo.entity.Category;
-import com.example.demo.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import com.gulusoft.util.BaseMapper;
+import org.springframework.beans.factory.annotation.Configurable;
 
 import java.util.List;
 
-/**
- * Created by Administrator on 2017/9/27.
- */
 @Mapper
 public interface CategoryMapper extends BaseMapper<Category> {
 

@@ -1,9 +1,21 @@
 package com.example.demo.entity;
 
-/**
- * Created by Administrator on 2017/9/27.
- */
-public class Category {
+import com.example.demo.mapper.NewsMapper;
+import com.gulusoft.util.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
+import com.example.demo.entity.News;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Service;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class Category extends AbstractEntity {
+
+    @Autowired
+    NewsMapper newsMapper;
+
     protected int id,status,parentId;
     protected String title;
 
@@ -40,6 +52,17 @@ public class Category {
     }
 
     public String getUrl() {
-        return this.getId() + ".html";
+        return "/category/" + this.getId() + getUrlSubfix();
+    }
+
+    public void setNewsMapper(NewsMapper newsMapper) {
+        this.newsMapper = newsMapper;
+    }
+
+    public List<News> getTopNews() {
+        PageHelper pageHelper = new PageHelper();
+        pageHelper.addFilter("category_id","=",String.valueOf(getId()));
+        pageHelper.setMapper(newsMapper);
+        return newsMapper.getPageList(pageHelper);
     }
 }
